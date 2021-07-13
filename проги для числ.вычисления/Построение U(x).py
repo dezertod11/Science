@@ -18,10 +18,7 @@ p = 0
 W = -1
 
 def U(x):
-    if x < 0:
-        return 4 - 6/(math.cosh(x))**2
-    elif x > 0:
-        return 4 - 6/(math.cosh(x))**2
+    return 4 - 6/(math.cosh(x))**2
 while W < 4:
     y = [0 for i in range(n + 1)]
     y[0] = e**(math.sqrt(4-W)*x[0])
