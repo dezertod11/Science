@@ -2,7 +2,6 @@ import numpy
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from scipy.misc import derivative
 
 x0 = -10
 xn = 10
@@ -56,18 +55,18 @@ while W < 4:
     y = [0 for i in range(n + 1)]
     y[0] = e**(math.sqrt(4-W)*x0)
     y[1] = e**(math.sqrt(4-W)*(x0+h))
-    i = 0
-    for xi in np.arange(x0, xn, h):
+    i = 1
+    for xi in np.arange(x0, xn-2*h, h):
         y[i + 1] = (2 - h**2*(W - U_array[i])) * y[i] - y[i - 1]
         i += 1
-    if abs(y[n]) < 1:
-        print(y[n], W,"v1")
-        plt.plot(np.arange(x0, xn, h), y, label="v1 w^2 = {}".format(W), color='blue', linewidth=2)
-        W += 0.5
-    elif y[n] < 0 and p > 0 or y[n] > 0 and p < 0:
-         print(y[n], W, "v2")
-         plt.plot(np.arange(x0, xn, h), y, label="v2 w^2 ={}".format(W), color='red', linewidth=2)
-         W += 0.5
+    # if abs(y[n]) < 1:
+    print(y[n-1], W,"v1")
+        # plt.plot(np.arange(x0, xn, h), y, label="v1 w^2 = {}".format(W), color='blue', linewidth=2)
+        # W += 0.5
+    # elif y[n] < 0 and p > 0 or y[n] > 0 and p < 0:
+    #      print(y[n], W, "v2")
+         # plt.plot(np.arange(x0, xn, h), y, label="v2 w^2 ={}".format(W), color='red', linewidth=2)
+         # W += 0.5
     p = y[n]
     W += 0.01
 
