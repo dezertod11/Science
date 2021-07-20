@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import math
 
 # Задаем начальные условия
-x0 = -5
-xn = 5
-xk = 4.5 #чичло xk должно быть недалеко от конца, иначе ничего не получится
+x0 = -3
+xn = 3
+xk = 2.99 #чиcло xk должно быть недалеко от конца, иначе ничего не получится
 h = 0.001
 W = -1
 fi_u = 1-1*10**(-15)
@@ -26,7 +26,7 @@ def bin_search(fi_u, fi_d , x_i): #ищем fi_i для каждого x_i
     # x_l = x(d)
     fi_s = (u + d) / 2
     x_s = x(fi_s)
-    while abs(x_s - x_i) > 0.01:
+    while abs(x_s - x_i) > 0.001:
         fi_s = (u + d)/2
         x_s = x(fi_s)
         # print(x_s, fi_s )
@@ -72,22 +72,24 @@ while W < 4:
     for xi in np.arange(xk, xn, h):
         y2[i - 1] = (2 - h**2*(W - U_array[i])) * y2[i] - y2[i + 1]
         i -= 1
-    # if abs(y[n]) < 1:
+    Wr = y2[0]*(y1[k+1] - y1[k])/h - y1[k+1]*(y2[1] - y2[0])/h
+    # if abs(Wr) < 1:
     #     print(y[n], W,"v1")
     #     plt.plot(np.arange(x0, xn, h), y, label="v1 w^2 = {}".format(W), color='blue', linewidth=2)
     #     W += 0.5
-    # elif y[n] < 0 and p > 0 or y[n] > 0 and p < 0:
-    #      print(y[n], W, "v2")
-    #      plt.plot(np.arange(x0, xn, h), y, label="v2 w^2 ={}".format(W), color='red', linewidth=2)
-    #      W += 0.5
+    if Wr < 0 and p > 0 or Wr > 0 and p < 0:
+         print(Wr, W, "v2")
+         # plt.plot(np.arange(x0, xn, h), y, label="v2 w^2 ={}".format(W), color='red', linewidth=2)
+         # W += 0.5
     W += 0.01
-    print(y2[0]*(y1[k+1] - y1[k])/h - y1[k+1]*(y2[1] - y2[0])/h, W)
+    p = Wr
+    # print(y2[0]*(y1[k+1] - y1[k])/h - y1[k+1]*(y2[1] - y2[0])/h, W)
     # print((y1[k] - y1[k - 1])/h,(y2[1] - y2[0])/h,W)
 plt.plot(np.arange(x0, xn, h), U_array, label="v1 w^2 = {}".format(W), color='blue', linewidth=2)
 plt.title('График потенциала U(x) для собственных значений')
 plt.xlabel('x')
 plt.ylabel('эта(x)')
-plt.xlim(-4, 4)
+plt.xlim(-10, 10)
 plt.ylim(-3, 5)
 plt.grid() # сетка по отметкам на осях
 plt.legend()  # подписи графиков
