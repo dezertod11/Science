@@ -1,15 +1,17 @@
-import numpy
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+e = math.e
 
 x0 = -10
 xn = 10
 h = 0.001
-W = -1
+U_min = -1
+W = U_min
 fi_u = 1-1*10**(-10)
 fi_d = -(1-1*10**(-10))
 n = int((xn - x0)/h)
+U_max = 4
 
 
 def U(fi):
@@ -47,11 +49,10 @@ def U_data(fi_u, fi_d, x0, xn, h):
     return U_array
 
 
-U_array = U_data(fi_u, fi_d, x0, xn, h)
-# print(U_array)
-e = math.e
+U_array = U_data(fi_u, fi_d, x0, xn, h) #массив U(x)
 p = 0
-while W < 4:
+
+while W < U_max:
     y = [0 for i in range(n + 1)]
     y[0] = e**(math.sqrt(4-W)*x0)
     y[1] = e**(math.sqrt(4-W)*(x0+h))
@@ -60,7 +61,7 @@ while W < 4:
         y[i + 1] = (2 - h**2*(W - U_array[i])) * y[i] - y[i - 1]
         i += 1
     # if abs(y[n]) < 1:
-    print(y[n-1], W,"v1")
+    print(y[n-1], W)
         # plt.plot(np.arange(x0, xn, h), y, label="v1 w^2 = {}".format(W), color='blue', linewidth=2)
         # W += 0.5
     # elif y[n] < 0 and p > 0 or y[n] > 0 and p < 0:
